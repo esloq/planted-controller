@@ -1,6 +1,8 @@
+
 #include "led.h"
 #include "ph.h"
 #include "sd.h"
+#include "clock.h"
 
 #define PH_READING_INTERVAL_MS 300000  // 5 minutes
 #define PH_LOW_VALUE 6.9
@@ -16,11 +18,13 @@ void active() {
   return;
 }
 
+
 void setup() {
   Serial.begin(DATA_RATE);
   delay(300);
   ph_sensor_setup();
   led_display_setup();
+  clock_setup();
   delay(300);
 }
 
@@ -28,7 +32,7 @@ void loop() {
   active();
 
   float ph = ph_read();
-  sd_ph_log(ph);
+  sd_ph_log(clock_timestamp(), ph);
   if (ph == 0) {
     led_error();
   }

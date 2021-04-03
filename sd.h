@@ -27,8 +27,8 @@ void sd_ph_log_save() {
   }
 }
 
-void sd_ph_log(float ph) {
-  ph_log_lines[ph_log_curr_line] = String(ph);
+void sd_ph_log(String timestamp, float ph) {
+  ph_log_lines[ph_log_curr_line] = timestamp + "," + String(ph);
   ph_log_curr_line++;
   if(ph_log_curr_line >= SD_PH_LOG_BUFFER_SIZE) {
     sd_ph_log_save();
